@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-import java.io.Serializable; 
-//test
+import java.io.Serializable;
 /**
  * Bracket Class
  * Created by Matt and Dan on 5/1/2017.
