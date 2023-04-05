@@ -101,11 +101,11 @@ public class ScoreBoardTable {
             System.out.println(e.getMessage());
         }
     }
+
     //feature to implement
     /**
      * clearPlayers method clears all players from this Bracket
      */
-
     public void clearPlayers() {
         scores = new HashMap<Bracket, Integer>();
         data = FXCollections.observableArrayList();
