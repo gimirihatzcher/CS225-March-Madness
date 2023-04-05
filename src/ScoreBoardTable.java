@@ -82,7 +82,6 @@ public class ScoreBoardTable {
     }
 
     public TableView<Bracket> start() {
-                
         return table;
     }
 
