@@ -30,7 +30,6 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         double offensivePPG;
         double defensivePPG;
 
-
         try{
             InputStream u = getClass().getResourceAsStream("teamInfo.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(u));
