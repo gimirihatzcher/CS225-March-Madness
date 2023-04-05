@@ -447,10 +447,10 @@ public class MarchMadnessGUI extends Application {
         }
 
         return bracket;
+
     }
     
     /**
-     * Tayon Watson 5/5
      * Import all .ser files from project folder and Instantiate Bracket objects for each file
      * @return List of new Bracket objects
      */
@@ -465,6 +465,11 @@ public class MarchMadnessGUI extends Application {
 
         // list all files in the directory
         File[] files = dir.listFiles();
+
+        // check whether files array is null or empty
+        if (files == null || files.length == 0) {
+            return list;
+        }
 
         // iterate over each file and check if it has .ser extension
         for (File fileEntry : files) {
