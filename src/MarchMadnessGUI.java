@@ -107,7 +107,7 @@ public class MarchMadnessGUI extends Application {
         // Connect Events to appropriate call methods
         loginBtn.setOnAction(e-> displayLoginWindow());
         simulateBtn.setOnAction(e-> simulateBracketGames());
-        scoreBoardBtn.setOnAction(e->swapDisplayWindow(scoreBoard.getTable()));
+        scoreBoardBtn.setOnAction(e->swapDisplayWindow(scoreBoard.getScoreTable()));
         viewBracketBtn.setOnAction(e-> displaySimulatedBracket());
         clearBtn.setOnAction(e->clear());
         resetBtn.setOnAction(e->reset());
@@ -164,7 +164,7 @@ public class MarchMadnessGUI extends Application {
             scoreBoard.addPlayer(b,b.scoreBracket(simResultBracket));
         }
 
-        swapDisplayWindow(scoreBoard.getTable());
+        swapDisplayWindow(scoreBoard.getScoreTable());
     }
 
     /**

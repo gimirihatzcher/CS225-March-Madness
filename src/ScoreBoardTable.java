@@ -80,7 +80,7 @@ public class ScoreBoardTable {
         scoreTable.getSortOrder().addAll(totalPtsCol, userNameCol);
     }
 
-    public TableView<Bracket> start() {
+    public TableView<Bracket> getScoreTable() {
         return scoreTable;
     }
     /**
