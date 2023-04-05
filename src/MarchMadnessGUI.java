@@ -98,7 +98,7 @@ public class MarchMadnessGUI extends Application {
         //the main layout container
         root = new BorderPane();
         scoreBoard= new ScoreBoardTable();
-        table=scoreBoard.start();
+        table=scoreBoard.getScoreTable();
         loginP=createLogin();
         CreateToolBars();
         
