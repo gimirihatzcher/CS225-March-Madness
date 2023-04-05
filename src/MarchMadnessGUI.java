@@ -37,6 +37,7 @@ import javafx.stage.Stage;
  *  @author Grant Osborn
  */
 public class MarchMadnessGUI extends Application {
+
     /* Root pane of application */
     private BorderPane root;
     /* Top row of buttons container */
