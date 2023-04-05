@@ -1,8 +1,6 @@
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -30,30 +28,26 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         double offensivePPG;
         double defensivePPG;
 
-        try{
-            InputStream u = getClass().getResourceAsStream("teamInfo.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(u));
 
-            while((name = br.readLine()) != null){
-            	nickname = br.readLine();
-                info = br.readLine();
-                ranking = Integer.parseInt(br.readLine());
-                offensivePPG = Double.parseDouble(br.readLine());
-                defensivePPG = Double.parseDouble(br.readLine());
-                
-                Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
+        InputStream u = getClass().getResourceAsStream("teamInfo.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(u));
 
-                br.readLine();   //gets rid of empty line between team infos
+        while((name = br.readLine()) != null){
+            nickname = br.readLine();
+            info = br.readLine();
+            ranking = Integer.parseInt(br.readLine());
+            offensivePPG = Double.parseDouble(br.readLine());
+            defensivePPG = Double.parseDouble(br.readLine());
 
-                teams.put(newTeam.getName(), newTeam);   //map team name with respective team object
-            }
+            Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
 
-            br.close();
+            br.readLine();   //gets rid of empty line between team infos
 
+            teams.put(newTeam.getName(), newTeam);   //map team name with respective team object
         }
-        catch(IOException ioe) {
-            throw ioe;
-        }
+
+        br.close();
+
     }
 
     /**
@@ -116,19 +110,14 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         ArrayList<String> starting = new ArrayList<String>();
 
 
-        try{
-            InputStream u = getClass().getResourceAsStream("initialMatches.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(u));
+        InputStream u = getClass().getResourceAsStream("initialMatches.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(u));
 
-            while((name = br.readLine()) != null){
-                starting.add(name);
-            }
-            
-            br.close();
+        while((name = br.readLine()) != null){
+            starting.add(name);
         }
-        catch(IOException ioe){
-            throw ioe;
-        }
+
+        br.close();
         return starting;
 
     }
