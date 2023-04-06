@@ -36,10 +36,6 @@ public class BracketPane extends BorderPane {
          */
         private static ArrayList<BracketNode> nodes;
         /**
-         * Used to initiate the paint of the bracket nodes
-         */
-        private static boolean isTop = true;
-        /**
          * Maps the text "buttons" to its respective grid-pane
          */
         private HashMap<StackPane, Pane> panes;
@@ -64,6 +60,9 @@ public class BracketPane extends BorderPane {
 
         private GridPane center;
         private GridPane fullPane;
+        private EventHandler<MouseEvent> exit;
+        private EventHandler<MouseEvent> enter;
+        private EventHandler<MouseEvent> clicked;
 
 
         /**
@@ -83,15 +82,49 @@ public class BracketPane extends BorderPane {
                 // Initialize other instance variables as needed
                 center = new GridPane();
                 fullPane = new GridPane();
+
+                /* Handles mouseExited events for BracketNode objects */
+                exit = this::handleExit;
+                /* Handles mouseEntered events for BracketNode objects */
+                enter = this::handleEnter;
+                /* Handles clicked events for BracketNode objects */
+                clicked = this::handleClicked;
         }
 
         /**
-         * Handles clicked events for BracketNode objects
+         * Initializes the properties needed to construct a bracket.
+         * The constructor takes a Bracket object to display and interact with.
+         * @param currentBracket the bracket to display and interact with
          */
-        private EventHandler<MouseEvent> clicked = mouseEvent -> {
+        public BracketPane(Bracket currentBracket) {
+                this();
+                displayedSubtree = 0;
+                this.currentBracket = currentBracket;
+
+                ArrayList<StackPane> buttons = createButtons();
+                ArrayList<BracketTree> roots = createRoots(buttons);
+                Pane finalPane = createFinalFour();
+                fullPane = createFullPane(roots, finalPane);
+
+                GridPane buttonGrid = initButtonGrid(buttons);
+
+                panes.put(buttons.get((buttons.size() - 1)), fullPane);
+                finalPane.toBack();
+
+                // set default center to the button grid
+                this.setCenter(buttonGrid);
+                addEventListeners(buttons);
+        }
+
+        /**
+         * Handler method for left-clicking on BracketNode(selecting a team to advance in bracket) and
+         * right-clicking on BracketNode(to show team information).
+         * @param event The users mouse click triggered event object
+         */
+        private void handleClicked(MouseEvent event) {
                 //conditional added by matt 5/7 to differentiate between left and right mouse click
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        BracketNode n = (BracketNode) mouseEvent.getSource();
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                        BracketNode n = (BracketNode) event.getSource();
                         int treeNum = bracketMap.get(n);
                         int nextTreeNum = (treeNum - 1) / 2;
                         if (!nodeMap.get(nextTreeNum).getName().equals(n.getName())) {
@@ -102,9 +135,9 @@ public class BracketPane extends BorderPane {
                         }
                 }
                 //added by matt 5/7, shows the teams info if you right click
-                else if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                else if (event.getButton().equals(MouseButton.SECONDARY)) {
                         String text = "";
-                        BracketNode n = (BracketNode) mouseEvent.getSource();
+                        BracketNode n = (BracketNode) event.getSource();
                         int treeNum = bracketMap.get(n);
                         String teamName = currentBracket.getBracket().get(treeNum);
                         try {
@@ -124,55 +157,25 @@ public class BracketPane extends BorderPane {
                         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                         alert.showAndWait();
                 }
-        };
+        }
 
         /**
-         * Handles mouseEntered events for BracketNode objects
+         * Handler method for hovering mouse over team name. Changes color of text.
+         * @param event The users mouse click triggered event object
          */
-        private EventHandler<MouseEvent> enter = mouseEvent -> {
-                BracketNode tmp = (BracketNode) mouseEvent.getSource();
+        private void handleEnter(MouseEvent event) {
+                BracketNode tmp = (BracketNode) event.getSource();
                 tmp.setEffect(new InnerShadow(10, Color.DARKBLUE));
-        };
+        }
 
         /**
-         * Handles mouseExited events for BracketNode objects
+         * Handler method for moving mouse away from hovering over team name. Removes color change effect of text.
+         * @param event The users mouse click triggered event object
          */
-        private EventHandler<MouseEvent> exit = mouseEvent -> {
-                BracketNode tmp = (BracketNode) mouseEvent.getSource();
+        private void handleExit(MouseEvent event) {
+                BracketNode tmp = (BracketNode) event.getSource();
                 tmp.setStyle(null);
                 tmp.setEffect(null);
-
-        };
-
-        /**
-         * Initializes the properties needed to construct a bracket.
-         * The constructor takes a Bracket object to display and interact with.
-         * @param currentBracket the bracket to display and interact with
-         */
-        public BracketPane(Bracket currentBracket) {
-                displayedSubtree=0;
-                this.currentBracket = currentBracket;
-
-                bracketMap = new HashMap<>();
-                nodeMap = new HashMap<>();
-                panes = new HashMap<>();
-                nodes = new ArrayList<>();
-                center = new GridPane();
-
-                ArrayList<StackPane> buttons = createButtons();
-                ArrayList<BracketTree> roots = createRoots(buttons);
-                Pane finalPane = createFinalFour();
-                fullPane = createFullPane(roots, finalPane);
-
-                GridPane buttonGrid = initButtonGrid(buttons);
-
-                panes.put(buttons.get((buttons.size() - 1)), fullPane);
-                finalPane.toBack();
-
-                // set default center to the button grid
-                this.setCenter(buttonGrid);
-                addEventListeners(buttons);
-
         }
 
         /**
@@ -204,19 +207,17 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Adds event listeners to the given StackPane buttons.
-         * These event listeners handle mouse entered, mouse exited, and mouse clicked events.
+         * Adds event listeners to the region selection buttons
+         * This allows hovering over a region button to alter the color, creating a highlight effect.
          *
-         * @param buttons The list of StackPane buttons to add event listeners to.
+         * @param buttons The list of region buttons
          */
         private void addEventListeners(ArrayList<StackPane> buttons) {
                 for (StackPane t : buttons) {
                         t.setOnMouseEntered(mouseEvent -> {
-
                                 t.setEffect(new InnerShadow(10, Color.GREENYELLOW));
                         });
                         t.setOnMouseExited(mouseEvent -> {
-
                                 t.setEffect(null);
                         });
                         t.setOnMouseClicked(mouseEvent -> {
@@ -228,6 +229,11 @@ public class BracketPane extends BorderPane {
                 }
         }
 
+        /**
+         *
+         * @param buttons
+         * @return
+         */
         private GridPane initButtonGrid(ArrayList<StackPane> buttons) {
                 GridPane buttonGrid = new GridPane();
                 for (int i = 0; i < buttons.size(); i++)
@@ -237,6 +243,12 @@ public class BracketPane extends BorderPane {
                 return buttonGrid;
         }
 
+        /**
+         *
+         * @param roots
+         * @param finalPane
+         * @return
+         */
         private GridPane createFullPane(ArrayList<BracketTree> roots, Pane finalPane) {
                 GridPane fullPane = new GridPane();
                 GridPane gp1 = new GridPane();
@@ -254,6 +266,11 @@ public class BracketPane extends BorderPane {
                 return fullPane;
         }
 
+        /**
+         *
+         * @param buttons
+         * @return
+         */
         public ArrayList<BracketTree> createRoots(ArrayList<StackPane> buttons){
                 ArrayList<BracketTree> roots = new ArrayList<>();
                 for (int m = 0; m < buttons.size() - 1; m++) {
@@ -263,6 +280,10 @@ public class BracketPane extends BorderPane {
                 return roots;
         }
 
+        /**
+         *
+         * @return
+         */
         public ArrayList<StackPane> createButtons(){
                 ArrayList<StackPane> buttons = new ArrayList<>();
                 buttons.add(customButton("EAST"));
@@ -301,13 +322,12 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Clears the sub tree from,
+         * Clears the subtree from,
          * @param position The position to clear after
          */
         public void clearSubtree(int position) {
                 currentBracket.resetSubtree(position);
         }
-
 
         /**
          * Requests a message from current bracket to tell if the bracket

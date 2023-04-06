@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import java.util.HashMap;
+
 /**
  * ScoreBoardPane class is the class the displays the Scoreboard from the Main GUI.
  * It shows all Player's names and their scores.
@@ -72,9 +73,6 @@ public class ScoreBoardTable {
         scoreTable.getSortOrder().addAll(totalPtsCol, userNameCol);
     }
 
-    public TableView<Bracket> getScoreTable() {
-        return scoreTable;
-    }
     /**
      * Adds a passed in player and their score to scores.
      * Will update the existing player score or add new player if and only if there are fewer than 16 players.
@@ -82,7 +80,7 @@ public class ScoreBoardTable {
     public void addPlayer(Bracket name, int score) {
         try {
             if (scores == null) {
-                scores = new HashMap<Bracket, Integer>();
+                scores = new HashMap<>();
             }
             if (scores.get(name) != null || scores.size() < maxPlayers) {
                 scores.put(name, score);
@@ -101,5 +99,9 @@ public class ScoreBoardTable {
     public void clearPlayers() {
         scores = new HashMap<Bracket, Integer>();
         data = FXCollections.observableArrayList();
+    }
+
+    public TableView<Bracket> getScoreTable() {
+        return scoreTable;
     }
 }

@@ -48,13 +48,6 @@ public class Bracket implements Serializable {
     }
 
     /**
-     * Returns an ArrayList of the bracket
-     */
-    public ArrayList<String> getBracket(){
-        return bracket;
-    }
-
-    /**
      * Moves a team up the bracket.
      * @param position The starting position of the team to be moved.
      */
@@ -139,20 +132,21 @@ public class Bracket implements Serializable {
         return password;
     }
     
-      /** 
-        * Hillary:
-        * returns true or false depending on whether there are any empty slots on the bracket.
-        * If a position has an empty string then the advancing team has not been chosen for that spot and the whole bracket is not complete.
-        * @return boolean.
-        */
-      public boolean isComplete() {
-          for (String team : bracket) {
-              if (team.equals("")) {
-                  return false;
-              }
-          }
-          return true;
-      }
+    /**
+    * Hillary:
+    * returns true or false depending on whether there are any empty slots on the bracket.
+    * If a position has an empty string then the advancing team has not been chosen for that spot and the whole bracket is not complete.
+    * @return boolean.
+    */
+    public boolean isComplete() {
+        for (String team : bracket) {
+            if (team.equals("")) {
+              return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Matt 5/2
@@ -198,8 +192,13 @@ public class Bracket implements Serializable {
     *   Right now it's not being used for anything since nothing is getting
     *   contents from it. This doesn't mean that it won't be useful in the
     *   future because the game simulation may change, utilizing this method.
-    *   I'll leave it here until things are more finalized. */
+    *   I'll leave it here until things are more finalized.
+    **/
     public void setTeamScore(int game, int score){
         teamScores[game] = score;
+    }
+
+    public ArrayList<String> getBracket(){
+        return bracket;
     }
 }
