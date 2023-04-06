@@ -70,7 +70,9 @@ public class ScoreBoardTable {
         scoreTable.getColumns().setAll(userNameCol, totalPtsCol);
         scoreTable.getSortOrder().addAll(totalPtsCol, userNameCol);
     }
-
+    /**
+     * Accesses the table to be shown by the GUI
+     */
     public TableView<Bracket> getScoreTable() {
         return scoreTable;
     }
