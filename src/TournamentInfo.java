@@ -2,11 +2,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 /**
+ *
  * Created by Artem on 5/2/2017.
  */
-public class TournamentInfo{//renamed from teamInfo by matt 5/4
+public class TournamentInfo{
+    /**  */
     HashMap<String, Team> teams;
 
     public TournamentInfo() throws IOException{
@@ -20,14 +21,12 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
      * @authors Artem, Rodrigo
      */
     private void loadFromFile() throws IOException{
-
         String name;
         String nickname;
         String info;
         int ranking;
         double offensivePPG;
         double defensivePPG;
-
 
         InputStream u = getClass().getResourceAsStream("teamInfo.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(u));
@@ -47,7 +46,6 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         }
 
         br.close();
-
     }
 
     /**
@@ -95,10 +93,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
             else
                 startingBracket.moveTeamUp(index2);
         }
-
     }
-
-
 
     /**
      * reads Strings from initialMatches.txt into an ArrayList in order to construct the starting bracket
@@ -107,8 +102,7 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
      */
     public ArrayList<String> loadStartingBracket() throws IOException{
         String name;
-        ArrayList<String> starting = new ArrayList<String>();
-
+        ArrayList<String> starting = new ArrayList<>();
 
         InputStream u = getClass().getResourceAsStream("initialMatches.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(u));
@@ -119,6 +113,5 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
 
         br.close();
         return starting;
-
     }
 }

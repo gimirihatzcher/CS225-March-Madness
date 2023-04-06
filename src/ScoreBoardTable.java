@@ -51,11 +51,7 @@ public class ScoreBoardTable {
          * userNameCol.setCellValueFactory() passes the data to the TableView object, which is
          * automatically sorted by TableColumn.SortType.DESCENDING
          */
-        userNameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Bracket, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Bracket, String> b) {
-                return new SimpleStringProperty(b.getValue().getPlayerName());
-            }
-        });
+        userNameCol.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getPlayerName()));
         userNameCol.setSortable(true);
 
         totalPtsCol = new TableColumn<>("Total Points");
@@ -66,11 +62,7 @@ public class ScoreBoardTable {
          * totalPtsCol.setCellValueFactory() passes the data to the TableView object, which is
          * automatically sorted by TableColumn.SortType.DESCENDING
          */
-        totalPtsCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Bracket, Number>, ObservableValue<Number>>() {
-            public ObservableValue<Number> call(TableColumn.CellDataFeatures<Bracket, Number> b) {
-                return new SimpleIntegerProperty(scores.get(b.getValue()));
-            }
-        });
+        totalPtsCol.setCellValueFactory(b -> new SimpleIntegerProperty(scores.get(b.getValue())));
         totalPtsCol.setSortable(true);
         totalPtsCol.setSortType(TableColumn.SortType.ASCENDING); //sorts column from highest to lowest
 
