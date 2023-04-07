@@ -1,4 +1,4 @@
-//package marchmadness;
+//package march madness;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 
 /**
  *  MarchMadnessGUI
- * 
+
  * this class contains the buttons the user interacts
  * with and controls the actions of other objects 
  *
@@ -43,7 +43,7 @@ import javafx.stage.Stage;
 public class MarchMadnessGUI extends Application {
     
     
-    //all the gui ellements
+    //all the gui elements
     private BorderPane root;
     private ToolBar toolBar;
     private ToolBar btoolBar;
@@ -192,7 +192,7 @@ public class MarchMadnessGUI extends Application {
 
     }
     /**
-     * resets current selected sub tree
+     * resets current selected subtree
      * for final4 reset Ro2 and winner
      */
     private void clear(){
@@ -405,7 +405,7 @@ public class MarchMadnessGUI extends Application {
     
     /**
      * The Exception handler
-     * Displays a error message to the user
+     * Displays an error message to the user
      * and if the error is bad enough closes the program
      * @param fatal true if the program should exit. false otherwise
      */
@@ -413,7 +413,6 @@ public class MarchMadnessGUI extends Application {
         String msg=e.getMessage();
         if(fatal){
             msg=msg+" \n\nthe program will now close";
-            //e.printStackTrace();
         }
         Alert alert = new Alert(AlertType.ERROR,msg);
         alert.setResizable(true);
@@ -460,8 +459,8 @@ public class MarchMadnessGUI extends Application {
      * @param B The bracket the is going to be seralized
      */
     private void seralizeBracket(Bracket B){
-        FileOutputStream outStream = null;
-        ObjectOutputStream out = null;
+        FileOutputStream outStream;
+        ObjectOutputStream out;
     try 
     {
       outStream = new FileOutputStream(B.getPlayerName()+".ser");
@@ -483,8 +482,8 @@ public class MarchMadnessGUI extends Application {
      */
     private Bracket deseralizeBracket(String filename){
         Bracket bracket = null;
-        FileInputStream inStream = null;
-        ObjectInputStream in = null;
+        FileInputStream inStream;
+        ObjectInputStream in;
     try 
     {
         inStream = new FileInputStream(filename);
@@ -505,9 +504,9 @@ public class MarchMadnessGUI extends Application {
      */
     private ArrayList<Bracket> loadBrackets()
     {   
-        ArrayList<Bracket> list=new ArrayList<Bracket>();
+        ArrayList<Bracket> list= new ArrayList<>();
         File dir = new File(".");
-        for (final File fileEntry : dir.listFiles()){
+        for (final File fileEntry : Objects.requireNonNull(dir.listFiles())){
             String fileName = fileEntry.getName();
             String extension = fileName.substring(fileName.lastIndexOf(".")+1);
        
