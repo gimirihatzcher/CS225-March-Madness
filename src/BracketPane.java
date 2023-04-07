@@ -134,7 +134,7 @@ public class BracketPane extends BorderPane {
                                 currentBracket.moveTeamUp(treeNum);
                         }
                 }
-                //added by matt 5/7, shows the teams info if you right click
+                //added by matt 5/7, shows the teams info if you right-click
                 else if (event.getButton().equals(MouseButton.SECONDARY)) {
                         String text = "";
                         BracketNode n = (BracketNode) event.getSource();
@@ -281,8 +281,8 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         *
-         * @return
+         * helper method to init Division choice buttons
+         * @return - created window pane
          */
         public ArrayList<StackPane> createButtons(){
                 ArrayList<StackPane> buttons = new ArrayList<>();
@@ -475,7 +475,7 @@ public class BracketPane extends BorderPane {
 
                 public BracketNode() {
                         teamName = "";
-                        rect = new Rectangle(5, 2);;
+                        rect = new Rectangle(5, 2);
                         name = new Label(teamName);
                 }
 
@@ -496,14 +496,10 @@ public class BracketPane extends BorderPane {
                         rect = new Rectangle(rX, rY);
                         rect.setFill(Color.TRANSPARENT);
                         name = new Label(teamName);
-                        // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
                         name.setTranslateX(5);
                         getChildren().addAll(name, rect);
                 }
 
-                /**
-                 * @return teamName The teams name.
-                 */
                 public String getName() {
                         return teamName;
                 }

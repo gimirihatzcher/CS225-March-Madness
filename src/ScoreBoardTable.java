@@ -54,13 +54,13 @@ public class ScoreBoardTable {
         userNameCol.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getPlayerName()));
         userNameCol.setSortable(true);
 
-        /**
+        /*
          * TableColumn totalPtsCol is the column on the right side of the table
          * totalPtsCol.setCellValueFactory() passes the data to the TableView object, which is
          *                                   automatically sorted with the TableColumn.SortType.ASCENDING
          *                                   code line.
          */
-        TableColumn<Bracket, Number> totalPtsCol = new TableColumn<>("Total Points");
+        totalPtsCol = new TableColumn<>("Total Points");
         totalPtsCol.setMinWidth(140);
         totalPtsCol.setMaxWidth(140);
         totalPtsCol.setStyle("-fx-border-width: 3px");
@@ -76,20 +76,13 @@ public class ScoreBoardTable {
     }
 
     /**
-     * Accesses the table to be shown by the GUI
-     */
-    public TableView<Bracket> getScoreTable() {
-        return scoreTable;
-    }
-
-    /**
      * Adds a passed in player and their score to scores.
      * Will update the existing player score or add new player if and only if there are fewer than 16 players.
      */
     public void addPlayer(Bracket name, int score) {
         try {
             if (scores == null) {
-                scores = new HashMap<Bracket, Integer>();
+                scores = new HashMap<>();
             }
             if (scores.get(name) != null || scores.size() < MAX_PLAYERS) {
                 scores.put(name, score);
@@ -99,6 +92,13 @@ public class ScoreBoardTable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Accesses the table to be shown by the GUI
+     */
+    public TableView<Bracket> getScoreTable() {
+        return scoreTable;
     }
 
 }

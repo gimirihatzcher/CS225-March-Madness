@@ -10,13 +10,13 @@ import java.io.Serializable;
  * @since 5/1/2017
  */
 public class Bracket implements Serializable {
-    private final static int NUM_OF_TEAM_SCORES = 127;
-    private final ArrayList<String> bracket;
     /* results of previous simulations are not saved when this object is serialized(exported to file) */
     private final transient int[] teamScores = new int[NUM_OF_TEAM_SCORES];
+    private final static int NUM_OF_TEAM_SCORES = 127;
+    public static final long serialVersionUID = 5609181678399742983L;
+    private final ArrayList<String> bracket;
     private String playerName;
     private String password;
-    public static final long serialVersionUID = 5609181678399742983L;
 
     /**
      * Creates a new bracket containing the teams specified in the list passed in as an argument.

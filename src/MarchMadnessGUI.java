@@ -227,7 +227,10 @@ public class MarchMadnessGUI extends Application {
             swapDisplayWindow(bracketPane);
         }
     }
-    
+
+    /**
+     * modify button controls that are enabled and serialize current bracket
+     */
     private void finalizeBracket(){
         if(bracketPane.isComplete()){
             bottomToolBar.setDisable(true);
