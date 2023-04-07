@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Bracket implements Serializable {
     private final static int NUM_OF_TEAM_SCORES = 127;
     private final ArrayList<String> bracket;
-    /* results of previous simulations are not saved when this object is serialized */
+    /* results of previous simulations are not saved when this object is serialized(exported to file) */
     private final transient int[] teamScores = new int[NUM_OF_TEAM_SCORES];
     private String playerName;
     private String password;

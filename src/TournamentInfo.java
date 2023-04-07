@@ -80,7 +80,7 @@ public class TournamentInfo{
 
             int score1 = 0;
             int score2 = 0;
-            while(score1==score2) {
+            while(score1 == score2) {
                 /* [chris] 4/7/23: This formula generates a random integer between 56 and 137,
                 with the range of values skewed towards the upper end for higher-ranked
                 teams. The rankWeight variable adjusts the random number generated
@@ -97,10 +97,11 @@ public class TournamentInfo{
             startingBracket.setTeamScore(index1, score1);
             startingBracket.setTeamScore(index2, score2);
 
-            if(score1>score2)
+            if(score1 > score2) {
                 startingBracket.moveTeamUp(index1);
-            else
+            } else {
                 startingBracket.moveTeamUp(index2);
+            }
         }
     }
 
