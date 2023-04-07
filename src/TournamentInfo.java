@@ -11,6 +11,10 @@ public class TournamentInfo{
     /** Access Team objects using their Team.name */
     HashMap<String, Team> teams;
 
+    /**
+     * Constructor
+     * @throws IOException - Loading "teamInfo.txt" file
+     * */
     public TournamentInfo() throws IOException{
         teams = new HashMap<>();
         loadFromFile();
@@ -20,6 +24,7 @@ public class TournamentInfo{
      * This private method will load all the team information from the teamInfo.txt file via a BufferedReader and load each team into
      * the teams HashMap using their name as the key and the actual Team object as the data.
      * @authors Artem, Rodrigo
+     * @throws IOException - while loading "teamInfo.txt" file if missing.
      */
     private void loadFromFile() throws IOException{
         String name;
@@ -96,6 +101,7 @@ public class TournamentInfo{
      * reads Strings from initialMatches.txt into an ArrayList in order to construct the starting bracket
      * @authors Matt, Artem
      * @return ArrayList of Strings
+     * @throws IOException - loading "initialMatches.txt";
      */
     public ArrayList<String> loadStartingBracket() throws IOException{
         String name;
@@ -118,7 +124,6 @@ public class TournamentInfo{
      * @authors Artem
      * @param teamName -- the name of the team to be found
      * @return the Team object for that team
-     * @throws Exception in case it's not in there
      */
     public Team getTeam(String teamName){
         return teams.get(teamName);
