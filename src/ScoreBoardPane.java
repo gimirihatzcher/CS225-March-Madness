@@ -3,18 +3,14 @@
 import javafx.geometry.Insets;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.Callback;
 import java.util.HashMap;
@@ -60,9 +56,9 @@ public class ScoreBoardPane{
         userNameCol.setStyle("-fx-border-width: 3px");
         userNameCol.setCellValueFactory(new MapValueFactory(Column1MapKey));
         userNameCol.setSortable(false);
-        userNameCol.setSortType(TableColumn.SortType.DESCENDING); //sorts column from highest to lowest
+        userNameCol.setSortType(TableColumn.SortType.ASCENDING); //sorts column from highest to lowest
 
-        /**
+        /*
          * TableColumn totalPtsCol is the column on the right side of the table
          */
         TableColumn<Map, String> totalPtsCol = new TableColumn<>("Total Points");
@@ -71,9 +67,9 @@ public class ScoreBoardPane{
         totalPtsCol.setStyle("-fx-border-width: 3px");
         totalPtsCol.setCellValueFactory(new MapValueFactory(Column2MapKey));
         totalPtsCol.setSortable(false);
-        totalPtsCol.setSortType(TableColumn.SortType.DESCENDING); //sorts column from highest to lowest
+        totalPtsCol.setSortType(TableColumn.SortType.ASCENDING); //sorts column from lowest to highest
 
-        /**
+        /*
          * TableView table_view is what the user sees in the GUI. This creates the table.
          */
         TableView table_view = new TableView<>(generateDataInMap());

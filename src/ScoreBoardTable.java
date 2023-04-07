@@ -7,10 +7,8 @@ import javafx.scene.control.TableView;
 import java.util.HashMap;
 /**
  * ScoreBoardPane class is the class the displays the Scoreboard from the Main GUI.
- * It shows all Player's names and their scores.
- * @author Sarah Higgins and Ying Sun
- * Created by Sarah on 5/2/17. Updated by Naomi Coakley on 4/4/23
- * */
+ * It shows all the Player's names and their scores.
+ */
 public class ScoreBoardTable {
     /**
      * Scores mapped to their respective players
@@ -46,24 +44,22 @@ public class ScoreBoardTable {
         userNameCol.setMinWidth(140);
         userNameCol.setMaxWidth(140);
         userNameCol.setStyle("-fx-border-width: 3px");
-        /*
-         * userNameCol.setCellValueFactory() passes the data to the TableView object, which is
-         * automatically sorted by TableColumn.SortType.DESCENDING
-         */
         userNameCol.setCellValueFactory(b -> new SimpleStringProperty(b.getValue().getPlayerName()));
         userNameCol.setSortable(true);
 
-        totalPtsCol = new TableColumn<>("Total Points");
+        /**
+         * TableColumn totalPtsCol is the column on the right side of the table
+         * totalPtsCol.setCellValueFactory() passes the data to the TableView object, which is
+         *                                   automatically sorted with the TableColumn.SortType.ASCENDING
+         *                                   code line.
+         */
+        TableColumn<Bracket, Number> totalPtsCol = new TableColumn<>("Total Points");
         totalPtsCol.setMinWidth(140);
         totalPtsCol.setMaxWidth(140);
         totalPtsCol.setStyle("-fx-border-width: 3px");
-        /*
-         * totalPtsCol.setCellValueFactory() passes the data to the TableView object, which is
-         * automatically sorted by TableColumn.SortType.DESCENDING
-         */
         totalPtsCol.setCellValueFactory(b -> new SimpleIntegerProperty(scores.get(b.getValue())));
         totalPtsCol.setSortable(true);
-        totalPtsCol.setSortType(TableColumn.SortType.ASCENDING); //sorts column from highest to lowest
+        totalPtsCol.setSortType(TableColumn.SortType.ASCENDING); //sorts column from lowest to highest
 
         scoreTable.setItems(data);
         scoreTable.setEditable(false);
@@ -94,4 +90,5 @@ public class ScoreBoardTable {
             System.out.println(e.getMessage());
         }
     }
+
 }

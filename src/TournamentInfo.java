@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /**
  *
  * Created by Artem on 5/2/2017.
@@ -28,6 +29,7 @@ public class TournamentInfo{
         double offensivePPG;
         double defensivePPG;
 
+
         InputStream u = getClass().getResourceAsStream("teamInfo.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(u));
 
@@ -46,6 +48,7 @@ public class TournamentInfo{
         }
 
         br.close();
+
     }
 
     /**
@@ -103,6 +106,7 @@ public class TournamentInfo{
     public ArrayList<String> loadStartingBracket() throws IOException{
         String name;
         ArrayList<String> starting = new ArrayList<>();
+
 
         InputStream u = getClass().getResourceAsStream("initialMatches.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(u));
