@@ -42,7 +42,7 @@ The Seahawks from the University of North Carolina, Wilmington. What a team. Wha
 
 Florida
 Gators
-The Gators can take on anyone, except Steve Irwin... Respect. (or is that crocodiles?).
+The Gators can take on anyone, except Steve Irwin... Respect. (or is that crocodiles?)
 4
 77.9
 66.5
@@ -77,7 +77,7 @@ From Waco, TX, the Bears will give you something to remember.
 
 New Mexico St.
 Aggies
-The Aggies famous for pouring their milk before their cereal, yikes!
+The Aggies, famous for pouring their milk before their cereal. Yikes!
 14
 78.8
 67.9
@@ -98,7 +98,7 @@ The Golden Eagles of beautiful Milwaukee, Wisconsin, gliding through the skies t
 
 Duke
 Blue Devils
-There's blue raspberry and then there's the Blue Devil's from Durham, NC. 
+There's blue raspberry and then there's the Blue Devils from Durham, NC. 
 2
 80.8
 70.2
@@ -112,7 +112,7 @@ Not your average contraceptive, part II.
 
 Kansas
 Jayhawks
-The Kansas Jayhawks will wipe the floor with their competators!
+The Kansas Jayhawks will wipe the floor with their competitors!
 1
 83.2
 71.9
@@ -153,7 +153,7 @@ The Wolf Pack from Reno, NV. *Howls into the night sky*
 71.3
 
 Purdue
-Bloilermakers
+Boilermakers
 The Boilermakers will... boil... the other teams???
 4
 79.7
@@ -161,7 +161,7 @@ The Boilermakers will... boil... the other teams???
 
 Vermont
 Catamounts
-Burlington, Vt residents who named their team after a rejected Pokemon. Good job Catamounts.
+Burlington, VT residents who named their team after a rejected Pokemon. Good job, Catamounts.
 13
 73.5
 62.1
@@ -182,7 +182,7 @@ Despite its small size, Rhode Island will RAM the other teams out of its way.
 
 Oregon
 Ducks
-Quack Quack make way for the Ducks!
+Quack quack, make way for the Ducks!
 3
 78.9
 65.8
@@ -224,7 +224,7 @@ Where do I even start with this team. They're the Gamecocks!
 
 Gonzaga
 Bulldogs
-The Gonzaga Bulldogs from Spokane, Washington cut through the competition like smooth buttery butter.
+The Gonzaga Bulldogs from Spokane, WA cut through the competition like smooth buttery butter.
 1
 82.6
 61.5
@@ -252,7 +252,7 @@ The Commodores will smell you later, losers.
 
 Notre Dame
 Fighting Irish
-"They'll squeesh yee oonder ther boot, swear on me mum. "
+"They'll squeesh ye oonder thar boot, a swear on me mum. "
 5
 77.3
 69.3
@@ -280,7 +280,7 @@ What did the father say to his son before leaving? "Bi-son"
 
 Maryland
 Terrapins
-This team makes a good omellete out of the other teams.
+This team makes a good omelet out of the other teams.
 6
 73.9
 68.1
@@ -329,7 +329,7 @@ The Tucston, Arizona Wildcats are pretty good, but are they GREAT?
 
 North Dakota
 Fighting Hawks
-The Fighting Hawks located in Grand Sporks, ND. Oh, did I say sporks? I meant Forks.
+The Fighting Hawks located in Grand Sporks, ND. Oh, did I say Sporks? I meant Forks.
 15
 80.6
 73.7
@@ -343,14 +343,14 @@ Chapell Hill is the home of the Tar Heels of the University of North Carolina.
 
 Texas Southern
 Tigers
-Theyyyyrreeeeee.... great too, but more south!
+Theyyyyrreeeeee.... great too, but more South!
 16
 74.1
 72.6
 
 Arkansas
 Razorbacks
-The Razorbacks from the big ol' town of Feyetteville, Arkansas are truely an unforgiving team.
+The Razorbacks from the big ol' town of Feyetteville, Arkansas are truly an unforgiving team.
 8
 79.3
 73.9
@@ -392,7 +392,7 @@ The Eagles from Rock Hill, South Carolina will knock your socks off!
 
 Cincinnati
 Bearcats
-The Bearcats. Is it a bear, or is it a cat? Ammiright. Cincinnati, OH.
+The Bearcats. Is it a bear or a cat, amiright? Cincinnati, OH.
 6
 74.3
 61.3
@@ -441,7 +441,7 @@ The Wildcats of the University of Kentucky came in a close second for the award 
 
 Northern Kentucky
 Norse
-Residing in the beautiful, but repetative Highland Heights of Kentucky. These guys are pretty dang high up.
+Residing in the beautiful, but repetitive Highland Heights of Kentucky. These guys are pretty dang high up.
 15
 74.8
 69.5
