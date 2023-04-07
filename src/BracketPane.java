@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /**
  * The BracketPane class represents a pane that displays a tournament bracket structure.
  * It allows users to interact with the bracket, including simulating matches and displaying team information.
@@ -53,11 +54,22 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<BracketNode, Integer> bracketMap;
         /**
-         * Reverse of the above;
+         * The `nodeMap` is the reverse mapping of the `bracketMap`; it maps an index in the bracket
+         * to its corresponding `BracketNode`.
          */
         private HashMap<Integer, BracketNode> nodeMap;
+
+        /**
+         * The `center` field is a `GridPane` that is used as the center of the bracket display.
+         */
         private GridPane center;
+
+        /**
+         * The `fullPane` field is a `GridPane` that is the full bracket display, including the
+         * `center` and any other necessary components.
+         */
         private GridPane fullPane;
+
         /** Handles mouseExited events for BracketNode objects */
         private EventHandler<MouseEvent> exit;
         /** Handles mouseEntered events for BracketNode objects */
@@ -65,6 +77,9 @@ public class BracketPane extends BorderPane {
         /** Handles clicked events for BracketNode objects */
         private EventHandler<MouseEvent> clicked;
 
+          /**
+         * Default constructor for the BracketPane class.
+         */
         public BracketPane() {
                 // Initialize instance variables with default values
                 nodes = new ArrayList<>();
@@ -130,7 +145,9 @@ public class BracketPane extends BorderPane {
                         }
                 }
                 //added by matt 5/7, shows the teams info if you right-click
+
                 else if (event.getButton().equals(MouseButton.SECONDARY)) {
+
                         String text = "";
                         BracketNode n = (BracketNode) event.getSource();
                         int treeNum = bracketMap.get(n);
@@ -225,9 +242,12 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * creates a pane for buttons
-         * @param buttons - buttons to add
-         * @return - pane with buttons
+         * The `initButtonGrid` method creates a `GridPane` for the buttons and adds the buttons to it.
+         * The `GridPane` is aligned to the center.
+         *
+         * @param buttons - the list of buttons to add to the `GridPane`
+         *
+         * @return - the `GridPane` with the buttons
          */
         private GridPane initButtonGrid(ArrayList<StackPane> buttons) {
                 GridPane buttonGrid = new GridPane();
@@ -239,10 +259,14 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Compose a pane
-         * @param roots - nodes in the bracket
-         * @param finalPane - component
-         * @return constructed window
+         * The `createFullPane` method creates the full `GridPane` that contains the bracket trees and
+         * final four bracket node `Pane`. The bracket trees and final four `Pane` are added to the full
+         * `GridPane` in the appropriate layout. The full `GridPane` is aligned to the center.
+         *
+         * @param roots - the list of bracket trees
+         * @param finalPane - the final four bracket node `Pane`
+         *
+         * @return - the full `GridPane`
          */
         private GridPane createFullPane(ArrayList<BracketTree> roots, Pane finalPane) {
                 GridPane fullPane = new GridPane();
@@ -262,7 +286,12 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Compose data structure for nodes
+         * The `createRoots` method creates the bracket trees and adds them to the `roots` list.
+         * The `panes` map is updated with the buttons and their corresponding bracket trees.
+         *
+         * @param buttons - the list of buttons
+         *
+         * @return - the list of bracket trees
          */
         public ArrayList<BracketTree> createRoots(ArrayList<StackPane> buttons){
                 ArrayList<BracketTree> roots = new ArrayList<>();
@@ -274,8 +303,9 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * helper method to init Division choice buttons
-         * @return - created window pane
+         * The `createButtons` method creates the buttons and adds them to the `buttons` list.
+         *
+         * @return - the list of buttons
          */
         public ArrayList<StackPane> createButtons(){
                 ArrayList<StackPane> buttons = new ArrayList<>();
@@ -298,11 +328,19 @@ public class BracketPane extends BorderPane {
                 ArrayList<Integer> positions = new ArrayList<>();
                 int base = 0;
                 int tmp = (root * 2) + 1;
-                if (pos == 8) base = 3;
-                else if (pos == 4) base = 2;
-                else if (pos == 2) base = 1;
-                for (int i = 0; i < base; i++) tmp = (tmp * 2) + 1;
-                for (int j = 0; j < pos * 2; j++) positions.add(tmp + j);
+                if (pos == 8) {
+                        base = 3;
+                }else if (pos == 4) {
+                        base = 2;
+                }else if (pos == 2) {
+                        base = 1;
+                }
+                for (int i = 0; i < base; i++) {
+                        tmp = (tmp * 2) + 1;
+                }
+                for (int j = 0; j < pos * 2; j++) {
+                        positions.add(tmp + j);
+                }
                 return positions; //                while ((tmp = ((location * 2) + 1)) <= 127) ;
         }
 
@@ -346,8 +384,11 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * place nodes for final four slots
-         * @return - final 4 pane
+         * The `createFinalFour` method creates a `Pane` that holds the final four bracket nodes.
+         * The final four bracket nodes are created using the `initializeBracketNode` method.
+         * The final `Pane` is returned.
+         *
+         * @return - the final `Pane` with the final four bracket nodes
          */
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
@@ -363,11 +404,15 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Create a node in the bracket display
-         * @param x position
-         * @param y position
-         * @param index reference to data
-         * @return completed node
+         * The `initializeBracketNode` method creates and initializes a bracket node.
+         * The bracket node's name is set to the value at the given `index` in the `currentBracket` bracket.
+         * The node is added to the `bracketMap` and `nodeMap`. Mouse event handlers are added to the node.
+         *
+         * @param x - the x coordinate of the bracket node
+         * @param y - the y coordinate of the bracket node
+         * @param index - the index of the node in the bracket
+         *
+         * @return - the initialized bracket node
          */
         private BracketNode initializeBracketNode(int x, int y, int index) {
                 BracketNode node = new BracketNode(currentBracket.getBracket().get(index), x, y, 70, 0);
@@ -417,7 +462,16 @@ public class BracketPane extends BorderPane {
                         }
 
                 }
-
+                /**
+                 * The `createSingleNode` method creates a single bracket node and adds it to the `nodes` list,
+                 * as well as the `getChildren` list. The bracket node's name is set to the value at the current
+                 * `location` in the `currentBracket` bracket. The `bracketMap` and `nodeMap` are also updated
+                 * with the new node and its index.
+                 *
+                 * @param x - the x coordinate of the bracket node
+                 * @param y - the y coordinate of the bracket node
+                 * @param offsetX - the offset of the x coordinate
+                 */
                 private void createSingleNode(int x, int y, int offsetX) {
                         BracketNode last = new BracketNode("", x, y - 20, offsetX, 20);
                         nodes.add(last);
@@ -427,6 +481,18 @@ public class BracketPane extends BorderPane {
                         nodeMap.put(location, last);
                 }
 
+                /**
+                 * The `createMultipleNodes` method creates multiple bracket nodes and adds them to the `nodes` list,
+                 * as well as the `getChildren` list. The bracket nodes are connected with lines. The `updateNodes` method
+                 * is called to set the names of the nodes and update the `bracketMap` and `nodeMap`.
+                 *
+                 * @param x - the x coordinate of the bracket node
+                 * @param y - the y coordinate of the bracket node
+                 * @param offsetX - the offset of the x coordinate
+                 * @param offsetY - the offset of the y coordinate
+                 * @param num - the number of bracket nodes to create
+                 * @param increment - the increment for the y coordinate
+                 */
                 private void createMultipleNodes(int x, int y, int offsetX, int offsetY, int num, int increment) {
                         ArrayList<BracketNode> nodeList = new ArrayList<>();
 
@@ -456,6 +522,15 @@ public class BracketPane extends BorderPane {
 
                 }
 
+                /**
+
+                 The updateNodes method sets the names of the bracket nodes in the nodeList and updates the
+                 bracketMap and nodeMap with the new nodes and their indices. The indices of the nodes are
+                 obtained using the helper method.
+                 @param nodeList - the list of bracket nodes to update
+                 @param location - the location in the bracket to start updating from
+                 @param num - the number of bracket nodes to update
+                 */
                 private void updateNodes(ArrayList<BracketNode> nodeList, int location, int num){
                         ArrayList<Integer> indices = helper(location, num);
                         for (int i = 0; i < nodeList.size(); i++) {
