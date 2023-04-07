@@ -72,8 +72,8 @@ public class TournamentInfo{
          * (Random int 75-135) * (1 - 0.02 * seed ranking)
          * This way, the multiplier would be between 0.68 and 0.98. Multiply that by 75-135, and you get a reasonable score with room for chance to prevail for lower teams. */
 
-            int index1 = 2*i+1;
-            int index2 = 2*i+2;
+            int index1 = 2 * i + 1;
+            int index2 = 2 * i + 2;
 
             Team team1 = teams.get(startingBracket.getBracket().get(index1));
             Team team2 = teams.get(startingBracket.getBracket().get(index2));
@@ -81,8 +81,17 @@ public class TournamentInfo{
             int score1 = 0;
             int score2 = 0;
             while(score1==score2) {
-                score1 = (int) (((Math.random() * 136) + 75) * (1 - (team1.getRanking() * 0.02)));
-                score2 = (int) (((Math.random() * 136) + 75) * (1 - (team2.getRanking() * 0.02)));
+                /* [chris] 4/7/23: This formula generates a random integer between 56 and 137,
+                with the range of values skewed towards the upper end for higher-ranked
+                teams. The rankWeight variable adjusts the random number generated
+                by Math.random() based on the ranking of the team, making it more
+                likely for higher-ranked teams to obtain a higher final score.
+                */
+                double rankWeight1 = 0.7 + (team1.getRanking() * 0.02);
+                score1 = (int) (((Math.random() * 61 * rankWeight1) + 75) * rankWeight1);
+
+                double rankWeight2 = 0.7 + (team2.getRanking() * 0.02);
+                score2 = (int) (((Math.random() * 61 * rankWeight2) + 75) * rankWeight2);
             }
 
             startingBracket.setTeamScore(index1, score1);

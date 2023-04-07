@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.util.HashMap;
+
 /**
  * ScoreBoardPane class is the class the displays the Scoreboard from the Main GUI.
  * It shows all Player's names and their scores.
@@ -16,7 +17,7 @@ public class ScoreBoardTable {
      * Scores mapped to their respective players
      */
     private HashMap<Bracket, Integer> scores;
-    private final int maxPlayers = 16;
+    private final int MAX_PLAYERS = 16;
     /**
      * Organizes rows and columns of usernames and their scores in order of placement.
      * Displayed by MarchMadnessGUI.
@@ -34,9 +35,15 @@ public class ScoreBoardTable {
      * List that reflects its changes immediately in JavaFX
      */
     private ObservableList<Bracket> data;
+
     /**
-     * ScoreBoardPane default constructor
+     * ScoreBoardPane default constructor.
+     * The @SuppressWarnings("unchecked") annotation is used for the setAll() and addAll()
+     * methods to suppress the unchecked generic warning. By using the annotation, the coder
+     * acknowledges that they are aware of the potential type mismatch, but takes
+     * responsibility for ensuring that the objects being added are of the correct type at runtime.
      */
+    @SuppressWarnings("unchecked")
     public ScoreBoardTable() {
         scoreTable = new TableView<>();
         data = FXCollections.observableArrayList();
@@ -67,15 +74,18 @@ public class ScoreBoardTable {
 
         scoreTable.setItems(data);
         scoreTable.setEditable(false);
+
         scoreTable.getColumns().setAll(userNameCol, totalPtsCol);
         scoreTable.getSortOrder().addAll(totalPtsCol, userNameCol);
     }
+
     /**
      * Accesses the table to be shown by the GUI
      */
     public TableView<Bracket> getScoreTable() {
         return scoreTable;
     }
+
     /**
      * Adds a passed in player and their score to scores.
      * Will update the existing player score or add new player if and only if there are fewer than 16 players.
@@ -85,7 +95,7 @@ public class ScoreBoardTable {
             if (scores == null) {
                 scores = new HashMap<Bracket, Integer>();
             }
-            if (scores.get(name) != null || scores.size() < maxPlayers) {
+            if (scores.get(name) != null || scores.size() < MAX_PLAYERS) {
                 scores.put(name, score);
                 data.add(name);
                 scoreTable.sort();

@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Bracket implements Serializable {
     private final static int NUM_OF_TEAM_SCORES = 127;
     private final ArrayList<String> bracket;
+    /* results of previous simulations are not saved when this object is serialized */
     private final transient int[] teamScores = new int[NUM_OF_TEAM_SCORES];
     private String playerName;
     private String password;
@@ -21,7 +22,7 @@ public class Bracket implements Serializable {
      * Creates a new bracket containing the teams specified in the list passed in as an argument.
      * @param teams A list containing the 64 teams competing in the tournament.
      */
-    public Bracket(ArrayList<String> teams){
+    public Bracket(ArrayList<String> teams) {
         bracket = new ArrayList<>(teams);
         while (bracket.size() < NUM_OF_TEAM_SCORES) {
             bracket.add(0,"");
@@ -55,7 +56,7 @@ public class Bracket implements Serializable {
         int newPos = ((position - 1) / 2);
 
         /* Check that the team isn't already in the destination position. */
-        if (!bracket.get(position).equals(bracket.get(newPos))) {
+        if (!(bracket.get(position).equals(bracket.get(newPos)))) {
             bracket.set(newPos, bracket.get(position));
         }
     }
