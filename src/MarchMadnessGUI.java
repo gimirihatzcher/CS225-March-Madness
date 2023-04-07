@@ -362,8 +362,8 @@ public class MarchMadnessGUI extends Application {
 
     
     /**
-     * The Exception handler
-     * Displays an error message to the user and kills program on fatal error.
+     * The Exception handler;
+     * displays an error message to the user and kills program on fatal error.
      * @param fatal true if the program should exit. false otherwise
      */
     private void showError(Exception e, boolean fatal){
@@ -383,7 +383,7 @@ public class MarchMadnessGUI extends Application {
     }
     
     /**
-     * alerts user to the result of their actions in the login pane 
+     * Alerts user to the result of their actions in the login pane
      * @param msg the message to be displayed to the user
      */
     private void infoAlert(String msg){
@@ -410,8 +410,8 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Tayon Watson 5/5
-     * Export the Bracket to a .ser file by serializing it.
+     * Tayon Watson 5/5.
+     * Exports the Bracket to a .ser file by serializing it.
      * @param B The bracket the is going to be serialized
      */
     private void serializeBracket(Bracket B){
@@ -428,8 +428,8 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Tayon Watson 5/5
-     * import a .ser file and deserialize it into a Bracket object
+     * Tayon Watson 5/5.
+     * Imports a .ser file and deserializes it into a Bracket object
      * @param filename of the serialized bracket file
      * @return deserialized bracket 
      */
@@ -451,7 +451,7 @@ public class MarchMadnessGUI extends Application {
     }
     
     /**
-     * Import all .ser files from project folder and Instantiate Bracket objects for each file
+     * Import all .ser files from project folder and instantiate Bracket objects for each file
      * @return List of new Bracket objects
      */
     private ArrayList<Bracket> loadSavedBrackets() {

@@ -5,42 +5,25 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.util.HashMap;
-
-/**
- * ScoreBoardPane class is the class the displays the Scoreboard from the Main GUI.
- * It shows all the Player's names and their scores.
- */
+/** ScoreBoardPane class is the class the displays the Scoreboard from the Main GUI. It shows all the Player's names and their scores. */
 public class ScoreBoardTable {
-    /**
-     * Scores mapped to their respective players
-     */
+    /** Scores mapped to their respective players */
     private HashMap<Bracket, Integer> scores;
     private final int MAX_PLAYERS = 16;
-    /**
-     * Organizes rows and columns of usernames and their scores in order of placement.
-     * Displayed by MarchMadnessGUI.
-     */
+    /** Organizes rows and columns of usernames and their scores in order of placement. Displayed by MarchMadnessGUI. */
     private TableView<Bracket> scoreTable;
-    /**
-     * The leftmost column of scoreTable.
-     */
+    /** The leftmost column of scoreTable. */
     private TableColumn<Bracket, String> userNameCol;
-    /**
-     * The rightmost column of scoreTable.
-     */
+    /** The rightmost column of scoreTable. */
     private TableColumn<Bracket, Number> totalPtsCol;
-    /**
-     * List that reflects its changes immediately in JavaFX
-     */
+    /** List that reflects its changes immediately in JavaFX */
     private ObservableList<Bracket> data;
 
-    /**
-     * ScoreBoardPane default constructor.
+    /** ScoreBoardPane default constructor.
      * The @SuppressWarnings("unchecked") annotation is used for the setAll() and addAll()
      * methods to suppress the unchecked generic warning. By using the annotation, the coder
      * acknowledges that they are aware of the potential type mismatch, but takes
-     * responsibility for ensuring that the objects being added are of the correct type at runtime.
-     */
+     * responsibility for ensuring that the objects being added are of the correct type at runtime. */
     @SuppressWarnings("unchecked")
     public ScoreBoardTable() {
         scoreTable = new TableView<>();
@@ -75,10 +58,7 @@ public class ScoreBoardTable {
         scoreTable.getSortOrder().addAll(totalPtsCol, userNameCol);
     }
 
-    /**
-     * Adds a passed in player and their score to scores.
-     * Will update the existing player score or add new player if and only if there are fewer than 16 players.
-     */
+    /** Adds a passed in player and their score to scores. Will update the existing player score or add new player if and only if there are fewer than 16 players. */
     public void addPlayer(Bracket name, int score) {
         try {
             if (scores == null) {
@@ -94,9 +74,7 @@ public class ScoreBoardTable {
         }
     }
 
-    /**
-     * Accesses the table to be shown by the GUI
-     */
+    /** Accesses the table to be shown by the GUI */
     public TableView<Bracket> getScoreTable() {
         return scoreTable;
     }
