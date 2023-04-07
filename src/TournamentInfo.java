@@ -8,7 +8,7 @@ import java.util.HashMap;
  * Created by Artem on 5/2/2017.
  */
 public class TournamentInfo{
-    /**  */
+    /** Access Team objects using their Team.name */
     HashMap<String, Team> teams;
 
     public TournamentInfo() throws IOException{
@@ -49,18 +49,6 @@ public class TournamentInfo{
 
         br.close();
 
-    }
-
-    /**
-     * This method will take a parameter of a team name and return the Team object corresponding to it.
-     * If it is unsuccessful, meaning the team does not exist, it will throw an exception.
-     * @authors Artem
-     * @param teamName -- the name of the team to be found
-     * @return the Team object for that team
-     * @throws Exception in case it's not in there
-     */
-    public Team getTeam(String teamName){
-        return teams.get(teamName);
     }
 
     /**
@@ -117,7 +105,6 @@ public class TournamentInfo{
         String name;
         ArrayList<String> starting = new ArrayList<>();
 
-
         InputStream u = getClass().getResourceAsStream("initialMatches.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(u));
 
@@ -127,5 +114,17 @@ public class TournamentInfo{
 
         br.close();
         return starting;
+    }
+
+    /**
+     * This method will take a parameter of a team name and return the Team object corresponding to it.
+     * If it is unsuccessful, meaning the team does not exist, it will throw an exception.
+     * @authors Artem
+     * @param teamName -- the name of the team to be found
+     * @return the Team object for that team
+     * @throws Exception in case it's not in there
+     */
+    public Team getTeam(String teamName){
+        return teams.get(teamName);
     }
 }

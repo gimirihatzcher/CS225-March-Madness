@@ -47,7 +47,6 @@ public class BracketPane extends BorderPane {
          * Reference to active subtree within current bracket.
          */
         private int displayedSubtree;
-
         /**
          * Important logical simplification for allowing for code that is easier
          * to maintain.
@@ -60,8 +59,11 @@ public class BracketPane extends BorderPane {
 
         private GridPane center;
         private GridPane fullPane;
+        /** Handles mouseExited events for BracketNode objects */
         private EventHandler<MouseEvent> exit;
+        /** Handles mouseEntered events for BracketNode objects */
         private EventHandler<MouseEvent> enter;
+        /** Handles clicked events for BracketNode objects */
         private EventHandler<MouseEvent> clicked;
 
 
@@ -83,11 +85,9 @@ public class BracketPane extends BorderPane {
                 center = new GridPane();
                 fullPane = new GridPane();
 
-                /* Handles mouseExited events for BracketNode objects */
+                // initialize mouseEvent handlers
                 exit = this::handleExit;
-                /* Handles mouseEntered events for BracketNode objects */
                 enter = this::handleEnter;
-                /* Handles clicked events for BracketNode objects */
                 clicked = this::handleClicked;
         }
 

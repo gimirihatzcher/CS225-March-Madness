@@ -146,8 +146,6 @@ public class MarchMadnessGUI extends Application {
         launch(args);
     }
     
-    
-    
     /**
      * simulates the tournament  
      * simulation happens only once and
@@ -205,7 +203,7 @@ public class MarchMadnessGUI extends Application {
     */
     private void displaySelectedBracket() {
         bottomToolBar.setDisable(false);
-        bracketPane = new BracketPane(selectedBracket); // TODO: creates new object instead of altering existing object
+        bracketPane = new BracketPane(selectedBracket);
         swapDisplayWindow(bracketPane);
     }
 
@@ -223,8 +221,7 @@ public class MarchMadnessGUI extends Application {
      * resets entire bracket
      */
     private void reset(){
-        if(confirmReset()){
-            //horrible hack to reset
+        if(confirmReset()) {
             selectedBracket = new Bracket(startingBracket);
             bracketPane = new BracketPane(selectedBracket);
             swapDisplayWindow(bracketPane);
