@@ -10,18 +10,19 @@ import java.io.Serializable;
  * @since 5/1/2017
  */
 public class Bracket implements Serializable {
-    private final static int NUM_OF_TEAM_SCORES = 127;
-    private final ArrayList<String> bracket;
+    /* results of previous simulations are not saved when this object is serialized(exported to file) */
     private final transient int[] teamScores = new int[NUM_OF_TEAM_SCORES];
+    private final static int NUM_OF_TEAM_SCORES = 127;
+    public static final long serialVersionUID = 5609181678399742983L;
+    private final ArrayList<String> bracket;
     private String playerName;
     private String password;
-    public static final long serialVersionUID = 5609181678399742983L;
 
     /**
      * Creates a new bracket containing the teams specified in the list passed in as an argument.
      * @param teams A list containing the 64 teams competing in the tournament.
      */
-    public Bracket(ArrayList<String> teams){
+    public Bracket(ArrayList<String> teams) {
         bracket = new ArrayList<>(teams);
         while (bracket.size() < NUM_OF_TEAM_SCORES) {
             bracket.add(0,"");
@@ -48,13 +49,6 @@ public class Bracket implements Serializable {
     }
 
     /**
-     * Returns an ArrayList of the bracket
-     */
-    public ArrayList<String> getBracket(){
-        return bracket;
-    }
-
-    /**
      * Moves a team up the bracket.
      * @param position The starting position of the team to be moved.
      */
@@ -62,7 +56,7 @@ public class Bracket implements Serializable {
         int newPos = ((position - 1) / 2);
 
         /* Check that the team isn't already in the destination position. */
-        if (!bracket.get(position).equals(bracket.get(newPos))) {
+        if (!(bracket.get(position).equals(bracket.get(newPos)))) {
             bracket.set(newPos, bracket.get(position));
         }
     }
@@ -110,49 +104,20 @@ public class Bracket implements Serializable {
     }
 
     /**
-     * Hillary Ssemakula:
-     * set player's password to string parameter 
-     * @param password a String
+     * Hillary:
+     * returns true or false depending on whether there are any empty slots on the bracket.
+     * If a position has an empty string then the advancing team has not been chosen for that spot and the whole bracket is not complete.
+     * @return boolean.
      */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
+    public boolean isComplete() {
+        for (String team : bracket) {
+            if (team.equals("")) {
+                return false;
+            }
+        }
 
-      /** 
-        * Hillary: 
-        * returns the name of the player
-        * @return String
-        */
-    public String getPlayerName()
-    {
-        return playerName;
+        return true;
     }
-    
-      /** 
-        * Hillary:
-        * returns the player's password
-        * @return String
-        */
-    public String getPassword()
-    {
-        return password;
-    }
-    
-      /** 
-        * Hillary:
-        * returns true or false depending on whether there are any empty slots on the bracket.
-        * If a position has an empty string then the advancing team has not been chosen for that spot and the whole bracket is not complete.
-        * @return boolean.
-        */
-      public boolean isComplete() {
-          for (String team : bracket) {
-              if (team.equals("")) {
-                  return false;
-              }
-          }
-          return true;
-      }
 
     /**
      * Matt 5/2
@@ -187,19 +152,26 @@ public class Bracket implements Serializable {
         return score;
     }
 
-    /**
-     * added by dan and matt 5/3
-     * Set teamScore for a game
-     * @param game, index of the place that will be scored
-     * @param score, the amount of points that the team scores
-     */
-    /* TODO: 4/3/2023
-    *   Figure out what to do with this method.
-    *   Right now it's not being used for anything since nothing is getting
-    *   contents from it. This doesn't mean that it won't be useful in the
-    *   future because the game simulation may change, utilizing this method.
-    *   I'll leave it here until things are more finalized. */
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public String getPlayerName()
+    {
+        return playerName;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
     public void setTeamScore(int game, int score){
         teamScores[game] = score;
+    }
+
+    public ArrayList<String> getBracket(){
+        return bracket;
     }
 }

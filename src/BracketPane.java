@@ -18,25 +18,20 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.Region;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.scene.layout.Region;
+
 
 /**
-
- The BracketPane class represents a pane that displays a tournament bracket structure.
-
- It allows users to interact with the bracket, including simulating matches and displaying team information.
-
- The BracketPane is responsible for initializing the bracket, handling user interactions, and updating the bracket.
-
- The class is designed to work in conjunction with the Bracket, Team, and TournamentInfo classes.
-
- Created by Richard and Ricardo on 5/3/17. Updated by Dorin Tihon 04/04/2023.
+ * The BracketPane class represents a pane that displays a tournament bracket structure.
+ * It allows users to interact with the bracket, including simulating matches and displaying team information.
+ * The BracketPane is responsible for initializing the bracket, handling user interactions, and updating the bracket.
+ * The class is designed to work in conjunction with the Bracket, Team, and TournamentInfo classes.
+ * Created by Richard and Ricardo on 5/3/17. Updated by Dorin Tihon 04/04/2023.
  */
 public class BracketPane extends BorderPane {
-
         /**
          * Reference to the graphical representation of the nodes within the bracket.
          */
@@ -53,7 +48,6 @@ public class BracketPane extends BorderPane {
          * Reference to active subtree within current bracket.
          */
         private int displayedSubtree;
-
         /**
          * Important logical simplification for allowing for code that is easier
          * to maintain.
@@ -76,7 +70,14 @@ public class BracketPane extends BorderPane {
          */
         private GridPane fullPane;
 
-        /**
+        /** Handles mouseExited events for BracketNode objects */
+        private EventHandler<MouseEvent> exit;
+        /** Handles mouseEntered events for BracketNode objects */
+        private EventHandler<MouseEvent> enter;
+        /** Handles clicked events for BracketNode objects */
+        private EventHandler<MouseEvent> clicked;
+
+          /**
          * Default constructor for the BracketPane class.
          */
         public BracketPane() {
@@ -93,21 +94,22 @@ public class BracketPane extends BorderPane {
                 // Initialize other instance variables as needed
                 center = new GridPane();
                 fullPane = new GridPane();
+
+                // initialize mouseEvent handlers
+                exit = this::handleExit;
+                enter = this::handleEnter;
+                clicked = this::handleClicked;
         }
+
         /**
          * Initializes the properties needed to construct a bracket.
          * The constructor takes a Bracket object to display and interact with.
          * @param currentBracket the bracket to display and interact with
          */
         public BracketPane(Bracket currentBracket) {
-                displayedSubtree=0;
+                this();
+                displayedSubtree = 0;
                 this.currentBracket = currentBracket;
-
-                bracketMap = new HashMap<>();
-                nodeMap = new HashMap<>();
-                panes = new HashMap<>();
-                nodes = new ArrayList<>();
-                center = new GridPane();
 
                 ArrayList<StackPane> buttons = createButtons();
                 ArrayList<BracketTree> roots = createRoots(buttons);
@@ -122,7 +124,70 @@ public class BracketPane extends BorderPane {
                 // set default center to the button grid
                 this.setCenter(buttonGrid);
                 addEventListeners(buttons);
+        }
 
+        /**
+         * Handler method for left-clicking on BracketNode(selecting a team to advance in bracket) and
+         * right-clicking on BracketNode(to show team information).
+         * @param event The users mouse click triggered event object
+         */
+        private void handleClicked(MouseEvent event) {
+                //conditional added by matt 5/7 to differentiate between left and right mouse click
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                        BracketNode n = (BracketNode) event.getSource();
+                        int treeNum = bracketMap.get(n);
+                        int nextTreeNum = (treeNum - 1) / 2;
+                        if (!nodeMap.get(nextTreeNum).getName().equals(n.getName())) {
+                                currentBracket.removeAbove((nextTreeNum));
+                                clearAbove(treeNum);
+                                nodeMap.get((bracketMap.get(n) - 1) / 2).setName(n.getName());
+                                currentBracket.moveTeamUp(treeNum);
+                        }
+                }
+                //added by matt 5/7, shows the teams info if you right-click
+
+                else if (event.getButton().equals(MouseButton.SECONDARY)) {
+
+                        String text = "";
+                        BracketNode n = (BracketNode) event.getSource();
+                        int treeNum = bracketMap.get(n);
+                        String teamName = currentBracket.getBracket().get(treeNum);
+                        try {
+                                TournamentInfo info = new TournamentInfo();
+                                Team t = info.getTeam(teamName);
+                                //by Tyler - added the last two pieces of info to the pop-up window
+                                text += "Team: " + teamName + " | Ranking: " + t.getRanking() + "\nMascot: "
+                                        + t.getNickname() + "\nInfo: " + t.getInfo() + "\nAverage Offensive PPG: "
+                                        + t.getOffensePPG() + "\nAverage Defensive PPG: "+ t.getDefensePPG();
+                        } catch (IOException e) {//if for some reason TournamentInfo isn't working, it will display info not found
+                                text += "Info for " + teamName + "not found";
+                        }
+                        //create a popup with the team info
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
+                        alert.setTitle("March Madness Bracket Simulator");
+                        alert.setHeaderText(null);
+                        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                        alert.showAndWait();
+                }
+        }
+
+        /**
+         * Handler method for hovering mouse over team name. Changes color of text.
+         * @param event The users mouse click triggered event object
+         */
+        private void handleEnter(MouseEvent event) {
+                BracketNode tmp = (BracketNode) event.getSource();
+                tmp.setEffect(new InnerShadow(10, Color.DARKBLUE));
+        }
+
+        /**
+         * Handler method for moving mouse away from hovering over team name. Removes color change effect of text.
+         * @param event The users mouse click triggered event object
+         */
+        private void handleExit(MouseEvent event) {
+                BracketNode tmp = (BracketNode) event.getSource();
+                tmp.setStyle(null);
+                tmp.setEffect(null);
         }
 
         /**
@@ -145,63 +210,6 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Handles clicked events for BracketNode objects
-         */
-        private EventHandler<MouseEvent> clicked = mouseEvent -> {
-                //conditional added by matt 5/7 to differentiate between left and right mouse click
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        BracketNode n = (BracketNode) mouseEvent.getSource();
-                        int treeNum = bracketMap.get(n);
-                        int nextTreeNum = (treeNum - 1) / 2;
-                        if (!nodeMap.get(nextTreeNum).getName().equals(n.getName())) {
-                                currentBracket.removeAbove((nextTreeNum));
-                                clearAbove(treeNum);
-                                nodeMap.get((bracketMap.get(n) - 1) / 2).setName(n.getName());
-                                currentBracket.moveTeamUp(treeNum);
-                        }
-                }
-                //added by matt 5/7, shows the teams info if you right-click
-                else if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                        String text = "";
-                        BracketNode n = (BracketNode) mouseEvent.getSource();
-                        int treeNum = bracketMap.get(n);
-                        String teamName = currentBracket.getBracket().get(treeNum);
-                        try {
-                                TournamentInfo info = new TournamentInfo();
-                                Team t = info.getTeam(teamName);
-                                //by Tyler - added the last two pieces of info to the pop-up window
-                                text += "Team: " + teamName + " | Ranking: " + t.getRanking() + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo() + "\nAverage Offensive PPG: " + t.getOffensePPG() + "\nAverage Defensive PPG: "+ t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo isn't working, it will display info not found
-                                text += "Info for " + teamName + "not found";
-                        }
-                        //create a popup with the team info
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
-                        alert.setTitle("March Madness Bracket Simulator");
-                        alert.setHeaderText(null);
-                        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                        alert.showAndWait();
-                }
-        };
-
-        /**
-         * Handles mouseEntered events for BracketNode objects
-         */
-        private EventHandler<MouseEvent> enter = mouseEvent -> {
-                BracketNode tmp = (BracketNode) mouseEvent.getSource();
-                tmp.setEffect(new InnerShadow(10, Color.DARKBLUE));
-        };
-
-        /**
-         * Handles mouseExited events for BracketNode objects
-         */
-        private EventHandler<MouseEvent> exit = mouseEvent -> {
-                BracketNode tmp = (BracketNode) mouseEvent.getSource();
-                tmp.setStyle(null);
-                tmp.setEffect(null);
-
-        };
-
-        /**
          * Gets the full pane containing the entire bracket.
          *
          * @return fullPane, a GridPane that contains the entire bracket.
@@ -211,19 +219,17 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Adds event listeners to the given StackPane buttons.
-         * These event listeners handle mouse entered, mouse exited, and mouse clicked events.
+         * Adds event listeners to the region selection buttons
+         * This allows hovering over a region button to alter the color, creating a highlight effect.
          *
-         * @param buttons The list of StackPane buttons to add event listeners to.
+         * @param buttons The list of region buttons
          */
         private void addEventListeners(ArrayList<StackPane> buttons) {
                 for (StackPane t : buttons) {
                         t.setOnMouseEntered(mouseEvent -> {
-
                                 t.setEffect(new InnerShadow(10, Color.GREENYELLOW));
                         });
                         t.setOnMouseExited(mouseEvent -> {
-
                                 t.setEffect(null);
                         });
                         t.setOnMouseClicked(mouseEvent -> {
@@ -347,13 +353,12 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Clears the sub tree from,
+         * Clears the subtree from,
          * @param position The position to clear after
          */
         public void clearSubtree(int position) {
                 currentBracket.resetSubtree(position);
         }
-
 
         /**
          * Requests a message from current bracket to tell if the bracket
@@ -370,7 +375,6 @@ public class BracketPane extends BorderPane {
          * @return pane The stack-pane "button"
          */
         private StackPane customButton(String name) {
-
                 StackPane pane = new StackPane();
                 Rectangle r = new Rectangle(100, 50, Color.TRANSPARENT);
                 Text t = new Text(name);
@@ -423,11 +427,11 @@ public class BracketPane extends BorderPane {
 
                 return node;
         }
+
         /**
          * Creates the graphical representation of a subtree.
          */
         private class BracketTree extends Pane {
-
                 private int location;
 
                 public BracketTree(int location) {
@@ -570,14 +574,10 @@ public class BracketPane extends BorderPane {
                         rect = new Rectangle(rX, rY);
                         rect.setFill(Color.TRANSPARENT);
                         name = new Label(teamName);
-                        // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
                         name.setTranslateX(5);
                         getChildren().addAll(name, rect);
                 }
 
-                /**
-                 * @return teamName The teams name.
-                 */
                 public String getName() {
                         return teamName;
                 }
