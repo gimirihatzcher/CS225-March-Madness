@@ -56,7 +56,6 @@ public class BracketPane extends BorderPane {
          * Reverse of the above;
          */
         private HashMap<Integer, BracketNode> nodeMap;
-
         private GridPane center;
         private GridPane fullPane;
         /** Handles mouseExited events for BracketNode objects */
@@ -66,10 +65,6 @@ public class BracketPane extends BorderPane {
         /** Handles clicked events for BracketNode objects */
         private EventHandler<MouseEvent> clicked;
 
-
-        /**
-         * Default constructor for the BracketPane class.
-         */
         public BracketPane() {
                 // Initialize instance variables with default values
                 nodes = new ArrayList<>();
@@ -230,9 +225,9 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         *
-         * @param buttons
-         * @return
+         * creates a pane for buttons
+         * @param buttons - buttons to add
+         * @return - pane with buttons
          */
         private GridPane initButtonGrid(ArrayList<StackPane> buttons) {
                 GridPane buttonGrid = new GridPane();
@@ -244,10 +239,10 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         *
-         * @param roots
-         * @param finalPane
-         * @return
+         * Compose a pane
+         * @param roots - nodes in the bracket
+         * @param finalPane - component
+         * @return constructed window
          */
         private GridPane createFullPane(ArrayList<BracketTree> roots, Pane finalPane) {
                 GridPane fullPane = new GridPane();
@@ -267,9 +262,7 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         *
-         * @param buttons
-         * @return
+         * Compose data structure for nodes
          */
         public ArrayList<BracketTree> createRoots(ArrayList<StackPane> buttons){
                 ArrayList<BracketTree> roots = new ArrayList<>();
@@ -344,7 +337,6 @@ public class BracketPane extends BorderPane {
          * @return pane The stack-pane "button"
          */
         private StackPane customButton(String name) {
-
                 StackPane pane = new StackPane();
                 Rectangle r = new Rectangle(100, 50, Color.TRANSPARENT);
                 Text t = new Text(name);
@@ -353,6 +345,10 @@ public class BracketPane extends BorderPane {
                 return pane;
         }
 
+        /**
+         * place nodes for final four slots
+         * @return - final 4 pane
+         */
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
 
@@ -366,6 +362,13 @@ public class BracketPane extends BorderPane {
                 return finalPane;
         }
 
+        /**
+         * Create a node in the bracket display
+         * @param x position
+         * @param y position
+         * @param index reference to data
+         * @return completed node
+         */
         private BracketNode initializeBracketNode(int x, int y, int index) {
                 BracketNode node = new BracketNode(currentBracket.getBracket().get(index), x, y, 70, 0);
 
@@ -379,11 +382,11 @@ public class BracketPane extends BorderPane {
 
                 return node;
         }
+
         /**
          * Creates the graphical representation of a subtree.
          */
         private class BracketTree extends Pane {
-
                 private int location;
 
                 public BracketTree(int location) {
